@@ -31,27 +31,25 @@ class TaskUnit:
         self.due_date_display = self.due_date.strftime("%d/%m/%Y") #default is None --> display by this attribute
         if self.due_date == self.default_due_date:
             self.due_date_display = None
+        
 
         #print to confirm init:
         print(f"Added task: {self.task}\nDue date:{self.due_date_display}\n")
     
 
 
-
+    # MARK COMPLETE/INCOMPLETE
     def mark_complete(self):
         '''
         Params: None
         Returns: None
         Side Effects: switches task.complete = True
         '''
-            
+        #Main method: 
         self.complete = True
 
         #print to confirm marked complete:
         print(f"{self.task} completion marked {self.complete}")
-
-
-
     
     def mark_incomplete(self):
         '''
@@ -59,7 +57,7 @@ class TaskUnit:
         Returns: None
         Side Effects: switches task.complete = False
         '''
-
+        #Main method:
         self.complete = False
 
         #print to confirm marked incomplete:
@@ -67,7 +65,7 @@ class TaskUnit:
 
 
 
-
+    # CHANGE/RESET DUE DATE
     def change_due_date(self, yyyy: int in range (2023, 2101), m: int in range (1,13), d: int in range (1,32)):
         '''
         Params:
@@ -85,17 +83,12 @@ class TaskUnit:
         if yyyy not in range(2023, 2101) or m not in range(1,13) or d not in range(1,32) or datetime(yyyy, m, d) < datetime.now():
             raise Exception("Date out of range.")
 
-
-
         #Main method:
         self.due_date = datetime(yyyy, m, d)
         self.due_date_display = self.due_date.strftime("%d/%m/%Y")
 
         #print to confirm due date added:
         print(f"{self.task} due date changed to {self.due_date_display}\n")
-
-
-
 
     def reset_due_date(self):
         '''
@@ -106,9 +99,19 @@ class TaskUnit:
         Returns: None
         Side Effects: None
         '''
-        
+        #Main method:
         self.due_date = self.default_due_date
         self.due_date_display = None
 
         #print to confirm due date reset:
         print(f"{self.task} due date changed to {self.due_date_display}\n")
+
+
+    # DISPLAY -- Use for testing only. Will use functions within TaskList
+    def display(self):
+        '''
+        Params: None
+        Returns: Formatted string for displaying task by task & due date
+        Side Effects: None
+        '''
+        return f"{self.task}\nDue: {self.due_date_display}"

@@ -45,6 +45,13 @@ def test_reset_due_date():
     assert task.due_date_display == None
 
 
+# Displaying Task:
+def test_display_formatting():
+    task = TaskUnit(task="some task")
+    assert task.display() == "Some task\nDue: None"
+    task.change_due_date(2024, 6, 27)
+    assert task.display() == "Some task\nDue: 27/06/2024"
+
 
 #### EDGE CASES:
 
