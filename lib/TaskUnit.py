@@ -12,7 +12,17 @@ class TaskUnit:
         Side Effects: creates a TaskUnit object with a set due date in in dd/mm/yyyy format, 
         and task string in title case
         '''
-        
+        #Catching TypeError for task:
+        if type(task) != str:
+            raise TypeError("Wrong input type for task. Please input as string.")
+        #Catching TypeError for date params:
+        if [type(date) for date in [yyyy,m,d]] != [int,int,int]:
+            raise TypeError("Wrong input type for dates. Please input as integers.")
+        #Catching if date params are out of range -- variables not in ranges specified, or date is before datetime.now():
+        if yyyy not in range(2023, 2101) or m not in range(1,13) or d not in range(1,32) or datetime(yyyy, m, d) < datetime.now():
+            raise Exception("Date out of range.")
+
+        #Main init:
         self.task = task.lower().capitalize()
         self.complete = False
         
@@ -31,7 +41,7 @@ class TaskUnit:
     def mark_complete(self):
         '''
         Params: None
-        Returns: None | Error if already complete
+        Returns: None
         Side Effects: switches task.complete = True
         '''
             
@@ -46,7 +56,7 @@ class TaskUnit:
     def mark_incomplete(self):
         '''
         Params: None
-        Returns: None | Error if already incomplete
+        Returns: None
         Side Effects: switches task.complete = False
         '''
 
@@ -58,7 +68,7 @@ class TaskUnit:
 
 
 
-    def add_due_date(self, yyyy: int in range (2023, 2101), m: int in range (1,13), d: int in range (1,32)):
+    def change_due_date(self, yyyy: int in range (2023, 2101), m: int in range (1,13), d: int in range (1,32)):
         '''
         Params:
             yyyy: int in range (2023, 2101) describing year
@@ -68,6 +78,16 @@ class TaskUnit:
         Side Effects: None
         '''
     
+        #Catching TypeError for date params:
+        if [type(date) for date in [yyyy,m,d]] != [int,int,int]:
+            raise TypeError("Wrong input type for dates. Please input as integers.")
+        #Catching if date params are out of range -- variables not in ranges specified, or date is before datetime.now():
+        if yyyy not in range(2023, 2101) or m not in range(1,13) or d not in range(1,32) or datetime(yyyy, m, d) < datetime.now():
+            raise Exception("Date out of range.")
+
+
+
+        #Main method:
         self.due_date = datetime(yyyy, m, d)
         self.due_date_display = self.due_date.strftime("%d/%m/%Y")
 
