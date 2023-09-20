@@ -8,7 +8,7 @@ def test_creating_task_with_no_due_date():
     task = TaskUnit(task="somE task")
     assert task.task == "Some task"
     assert task.complete == False
-    assert task.due_date_display == "01/01/2100"
+    assert task.due_date_display == None
 
 # Make a TaskUnit with set due_date:
 def test_creating_task_with_due_date():
@@ -42,5 +42,5 @@ def test_reset_due_date():
     task = TaskUnit(task="somE task", d=2, m=10, yyyy=2024)
     assert task.due_date_display == "02/10/2024"
     task.reset_due_date()
-    assert task.due_date_display == "01/01/2100"
+    assert task.due_date_display == None
 

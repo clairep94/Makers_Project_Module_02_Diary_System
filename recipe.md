@@ -67,9 +67,8 @@ I want to see a list of all of the mobile phone numbers in all my diary entries
 
 ## 3) Create Example as Integration Test
 
-Between TaskUnit and TaskList:
+Between TaskUnit and TaskList: (rest in test_task_list_integration.py)
 
-Adding TasksUnit(s) to TaskList:
 
 ```shell
 #Adding TaskUnits to a TaskList
@@ -114,7 +113,7 @@ sorted_list = sorted(my_list, key=lambda x: x.my_attribute)
 
 ## 4) Create Example as Unit Test
 
-For TaskUnit:
+For TaskUnit: (rest in test_task_unit.py)
 
 ``` shell
 # For a TaskUnit with default kwargs:

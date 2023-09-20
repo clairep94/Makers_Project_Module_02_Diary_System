@@ -18,8 +18,9 @@ class TaskUnit:
         
         self.default_due_date = datetime(2100, 1, 1)
         self.due_date = datetime(yyyy, m, d) #default is (2100, 1, 1) --> sort by this attribute
-        self.due_date_display = self.due_date.strftime("%d/%m/%Y") #default is "2100/01/01" --> display by this attribute
-        ## Change display to None if self.due_date == datetime.datetime(2100, 1, 1)
+        self.due_date_display = self.due_date.strftime("%d/%m/%Y") #default is None --> display by this attribute
+        if self.due_date == self.default_due_date:
+            self.due_date_display = None
 
         #print to confirm init:
         print(f"Added task: {self.task}\nDue date:{self.due_date_display}\n")
@@ -87,8 +88,7 @@ class TaskUnit:
         '''
         
         self.due_date = self.default_due_date
-        self.due_date_display = self.due_date.strftime("%d/%m/%Y") #"2100/01/01"
-        ## Change display to None if self.due_date == datetime.datetime(2100, 1, 1)
+        self.due_date_display = None
 
         #print to confirm due date reset:
         print(f"{self.task} due date changed to {self.due_date_display}\n")
