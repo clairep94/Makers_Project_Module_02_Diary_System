@@ -39,7 +39,7 @@ class TaskUnit:
 
 
     # MARK COMPLETE/INCOMPLETE
-    def mark_complete(self):
+    def mark_complete(self) -> None:
         '''
         Params: None
         Returns: None
@@ -51,7 +51,7 @@ class TaskUnit:
         #print to confirm marked complete:
         print(f"{self.task} completion marked {self.complete}")
     
-    def mark_incomplete(self):
+    def mark_incomplete(self) -> None:
         '''
         Params: None
         Returns: None
@@ -66,7 +66,7 @@ class TaskUnit:
 
 
     # CHANGE/RESET DUE DATE
-    def change_due_date(self, yyyy: int in range (2023, 2101), m: int in range (1,13), d: int in range (1,32)):
+    def change_due_date(self, yyyy: int in range (2023, 2101), m: int in range (1,13), d: int in range (1,32)) -> None:
         '''
         Params:
             yyyy: int in range (2023, 2101) describing year
@@ -90,7 +90,7 @@ class TaskUnit:
         #print to confirm due date added:
         print(f"{self.task} due date changed to {self.due_date_display}\n")
 
-    def reset_due_date(self):
+    def reset_due_date(self) -> None:
         '''
         Params: None
         Returns: None
@@ -104,8 +104,8 @@ class TaskUnit:
         print(f"{self.task} due date changed to {self.due_date_display}\n")
 
 
-    # DISPLAY -- Use for testing only. Will use functions within TaskList
-    def display(self):
+    # DISPLAY -- Depreciated, use for unit testing only. Will use newer display methods within TaskList
+    def display(self) -> str:
         '''
         Params: None
         Returns: Formatted string for displaying task by task & due date

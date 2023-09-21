@@ -13,7 +13,7 @@ class TaskList():
         self.incomplete_tasks = [entry for entry in self.all_tasks if entry.complete == False] #all TaskUnit objects where TaskUnit.complete = False --> not displayed to user
 
     #REFRESH INCOMPLETE & COMPLETE TASK LISTS:
-    def refresh(self):
+    def refresh(self) -> None:
         '''
         Params: None
         Returns: None
@@ -23,7 +23,7 @@ class TaskList():
         self.incomplete_tasks = [entry for entry in self.all_tasks if entry.complete == False] #all TaskUnit objects where TaskUnit.complete = False --> not displayed to user
 
     #SELECT BY TASK: 
-    def select_task_by_name(self, task_string):
+    def select_task_by_name(self, task_string:str) -> TaskUnit:
         '''
         Params: task_string: string to describe the task
         Result: first TaskUnit object in self.all_tasks where TaskUnit.task == task_string | Exception
@@ -36,7 +36,7 @@ class TaskList():
             return result
 
     #SELECTING LIST:
-    def select_list(self, lst_choice) -> list:
+    def select_list(self, lst_choice:str) -> list:
         '''
         Params: lst_choice: string representing self.all_tasks, self.complete_tasks, and self.incomplete_tasks
         Returns: self.all_tasks, self.complete_tasks, self.incomplete_tasks | Exception for invalid choice
@@ -61,26 +61,28 @@ class TaskList():
         return sorted(lst_to_sort, key = lambda x: x.due_date)
     
     #ADDING/DELETING:
-    def add(self, task) -> None:
+    def add(self, task:TaskUnit) -> None:
         '''
         Params: task: TaskUnit object
-        Returns: None | TypeError if isinstance() != TaskUnit
+        Returns: None | Exception if task not in self.alltasks
         Side Effects: Adds TaskUnit to self.all_tasks
         '''
         if isinstance(task, TaskUnit) != True:
             raise Exception("Invalid task")
         self.all_tasks.append(task)
         self.refresh()
-    def delete(self, task) -> None: 
+
+    def delete(self, task:TaskUnit) -> None: 
         '''
         Params: task: TaskUnit object
-        Returns: None | TypeError if isinstance() != TaskUnit 
+        Returns: None | Exception if task not in self.alltasks 
         Side Effects: removes TaskUnit from self.all_tasks
         '''
         if task not in self.all_tasks:
             raise Exception("Invalid task")
         self.all_tasks.remove(task)
         self.refresh()
+
     def delete_all(self, lst="all") -> None:
         '''
         Params: lst - string representing which list to update
@@ -92,7 +94,7 @@ class TaskList():
         self.refresh()
 
     #COMPLETE/INCOMPLETE:
-    def mark_complete_task(self, task) -> None:        
+    def mark_complete_task(self, task:TaskUnit) -> None:        
         '''
         Params: task: TaskUnit object
         Returns: None | TypeError if isinstance() != TaskUnit 
@@ -102,7 +104,8 @@ class TaskList():
             raise Exception("Invalid task")
         task.mark_complete()
         self.refresh()
-    def mark_incomplete_task(self, task):
+
+    def mark_incomplete_task(self, task:TaskUnit) -> None:
         '''
         Params: task: TaskUnit object
         Returns: None | TypeError if isinstance() != TaskUnit 
@@ -112,7 +115,8 @@ class TaskList():
             raise Exception("Invalid task")
         task.mark_incomplete()
         self.refresh()
-    def mark_all_complete(self, lst="all"):
+
+    def mark_all_complete(self, lst="all") -> None:
         '''
         Params:  lst - string representing which list to update
         Returns: None
@@ -121,7 +125,8 @@ class TaskList():
         selected_list = self.select_list(lst_choice=lst)
         for entry in selected_list:
             self.mark_complete_task(task=entry)
-    def mark_all_incomplete(self, lst="all"):
+
+    def mark_all_incomplete(self, lst="all") -> None:
         '''
         Params:  lst - string representing which list to update
         Returns: None
@@ -133,7 +138,7 @@ class TaskList():
 
 
     #CHANGE/RESET DUE DATE:
-    def change_due_date(self, task, yyyy, m, d):
+    def change_due_date(self, task:TaskUnit, yyyy:int, m:int, d:int) -> None:
         '''
         Params: 
             task: TaskUnit object
@@ -148,7 +153,7 @@ class TaskList():
         task.change_due_date(yyyy, m, d)
         self.refresh()
 
-    def reset_due_date(self, task):
+    def reset_due_date(self, task:TaskUnit) -> None:
         '''
         Params: task: TaskUnit object
         Returns: None
@@ -158,7 +163,8 @@ class TaskList():
             raise Exception("Invalid task")
         task.reset_due_date()
         self.refresh()
-    def reset_all(self, lst="all"):
+
+    def reset_all(self, lst="all") -> None:
         '''
         Params: lst - string representing which list to update
         Returns: None
@@ -178,6 +184,8 @@ class TaskList():
             display_due_date: boolean -- whether to display due date when display is set to True. 
                 * If display_printabe is False, display_due_date is set to False.
             sort_by_due: boolean -- whether to sort by added (default) when set to False, or by due_date when set to True
+        Returns: a list of strings if display_printable == False. Else a string.
+        Side Effects: None
         '''
 
         #1) Setting the list of TaskUnits to display -- all, completed, or incomplete
@@ -198,7 +206,8 @@ class TaskList():
             return formatted_list
         else:
             return "\n".join(formatted_list)
-    def format(self, lst_choice_sorted, display_printable, display_due_date): #REFORMAT TO BELOW.
+
+    def format(self, lst_choice_sorted, display_printable, display_due_date) -> list:
         '''
         For use in self.display():
         Params:
@@ -232,4 +241,4 @@ class TaskList():
             result.append(string)
 
         return result
-    ### Change format to [] Task.task or [x] Task.task for printable
+    ### Change format to [] Task.task or [x] Task.task for printable?
