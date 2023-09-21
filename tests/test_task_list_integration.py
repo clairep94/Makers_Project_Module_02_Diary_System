@@ -124,6 +124,23 @@ def test_error_invalid_select_list():
         task_list.select_list("complete")
     assert str(e.value) == "Invalid choice. Please select 'all', 'completed' or 'incomplete'"
 
+# Selecting a TaskUnit object by TaskUnit.task:
+def test_select_task_by_name():
+    task_list = TaskList()
+    task_A = TaskUnit("task A", 2024, 6, 27)
+    task_B = TaskUnit("task B")
+    task_C = TaskUnit("Task C", 2023, 12, 12)
+    task_list.add(task_A)
+    task_list.add(task_B)
+    task_list.add(task_C)
+    assert task_list.select_task_by_name("Task a") == task_A
+def test_error_select_task_by_name():
+    task_list = TaskList()
+    task_A = TaskUnit("task A", 2024, 6, 27)
+    task_list.add(task_A)
+    with pytest.raises(Exception) as e:
+        task_list.select_task_by_name("Task AB")
+    assert str(e.value) == "Invalid task name."
 
 # Sorting a list by date:
 def test_sort_list_by_date():

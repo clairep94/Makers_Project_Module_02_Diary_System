@@ -22,10 +22,18 @@ class TaskList():
         self.completed_tasks = [entry for entry in self.all_tasks if entry.complete == True] #all TaskUnit objects where TaskUnit.complete = True --> not displayed to user
         self.incomplete_tasks = [entry for entry in self.all_tasks if entry.complete == False] #all TaskUnit objects where TaskUnit.complete = False --> not displayed to user
 
-    #SELECT BY TASK: for when I change all functions below from TaskUnit object to TaskUnit.task
+    #SELECT BY TASK: 
     def select_task_by_name(self, task_string):
-        #returns TaskUnit object where task_string == TaskUnit.task
-        pass
+        '''
+        Params: task_string: string to describe the task
+        Result: first TaskUnit object in self.all_tasks where TaskUnit.task == task_string | Exception
+        SideEffects: none
+        '''
+        result = next((obj for obj in self.all_tasks if obj.task == task_string), None)
+        if result == None:
+            raise Exception("Invalid task name.")
+        else:
+            return result
 
     #SELECTING LIST:
     def select_list(self, lst_choice) -> list:
@@ -139,6 +147,7 @@ class TaskList():
             raise Exception("Invalid task")
         task.change_due_date(yyyy, m, d)
         self.refresh()
+
     def reset_due_date(self, task):
         '''
         Params: task: TaskUnit object
