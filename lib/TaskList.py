@@ -126,19 +126,39 @@ class TaskList():
 
     #CHANGE/RESET DUE DATE:
     def change_due_date(self, task, yyyy, m, d):
+        '''
+        Params: 
+            task: TaskUnit object
+            yyyy: int in range (2023, 2101) describing year
+            m: int in range (1,13) describing month
+            d: int in range (1,32) describing day
+        Returns: None
+        Effects: Changes due date for TaskUnit object
+        '''
         if task not in self.all_tasks:
             raise Exception("Invalid task")
         task.change_due_date(yyyy, m, d)
         self.refresh()
-
     def reset_due_date(self, task):
+        '''
+        Params: task: TaskUnit object
+        Returns: None
+        Effects: resets task due date | Exception if task is not in self.all_tasks
+        '''
         if task not in self.all_tasks:
             raise Exception("Invalid task")
         task.reset_due_date()
         self.refresh()
-
     def reset_all(self, lst="all"):
-        pass
+        '''
+        Params: lst - string representing which list to update
+        Returns: None
+        Effects: reset all due dates
+        '''
+        selected_list = self.select_list(lst_choice=lst)
+        for entry in selected_list:
+            entry.reset_due_date()
+        self.refresh()
 
     #DISPLAYING TASKS IN THE TERMINAL: 
     def display(self, lst_choice = "all", display_printable = False, display_due_date = False, sort_by_due = False):

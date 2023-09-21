@@ -92,12 +92,9 @@ class TaskUnit:
 
     def reset_due_date(self):
         '''
-        Params:
-            yyyy: int in range (2023, 2101) describing year
-            m: int in range (1,13) describing month
-            d: int in range (1,32) describing day
+        Params: None
         Returns: None
-        Side Effects: None
+        Side Effects: Reset due date for task to display None and datetime object for 2100/01/01
         '''
         #Main method:
         self.due_date = self.default_due_date

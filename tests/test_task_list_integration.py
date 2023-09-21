@@ -147,6 +147,45 @@ def test_error_invalid_sort_list_by_date_param():
         task_list.sort_by_due_date("invalid data")
     assert str(e.value) == "Invalid type for lst_to_sort. Please input a list."
 
+
+
+# Change Due Date
+def test_change_due_date():
+    task_list = TaskList()
+    task_A = TaskUnit("task A")
+    task_list.add(task_A)
+    assert task_list.display(display_printable=True, display_due_date=True) == '''Task a
+- Due: None'''
+    task_list.change_due_date(task_A, 2024, 6, 27)
+    assert task_list.display(lst_choice="all", display_printable=True, display_due_date=True) == '''Task a
+- Due: 27/06/2024'''
+
+def test_error_invalid_change_due_date():
+    task_list = TaskList()
+    task_A = TaskUnit("task A")
+    task_B = TaskUnit("task A")
+    task_list.add(task_A)
+    with pytest.raises(Exception) as e:
+        task_list.change_due_date(task_B, 2024, 6, 27)
+    assert str(e.value) == "Invalid task"
+
+
+# Reset Due Date
+def test_reset_due_date():
+    task_list = TaskList()
+    task_A = TaskUnit("task A")
+    task_list.add(task_A)
+    assert task_list.display(display_printable=True, display_due_date=True) == '''Task a
+- Due: None'''
+    task_list.change_due_date(task_A, 2024, 6, 27)
+    assert task_list.display(display_printable=True, display_due_date=True) == '''Task a
+- Due: 27/06/2024'''
+    task_list.reset_due_date(task_A)
+    assert task_list.display(display_printable=True, display_due_date=True) == '''Task a
+- Due: None'''
+
+
+
 # Deleting All:
 def test_delete_all_tasks():
     task_list = TaskList()
@@ -191,36 +230,22 @@ def test_incomplete_all_tasks():
     assert task_list.completed_tasks == []
     assert task_list.incomplete_tasks == [task_A, task_B, task_C]
 
-
-# Change Due Date
-def test_change_due_date():
-    task_list = TaskList()
-    task_A = TaskUnit("task A")
-    task_list.add(task_A)
-    assert task_list.display(display_printable=True, display_due_date=True) == '''Task a
-- Due: None'''
-    task_list.change_due_date(task_A, 2024, 6, 27)
-    assert task_list.display(lst_choice="all", display_printable=True, display_due_date=True) == '''Task a
-- Due: 27/06/2024'''
-
-
-# Reset Due Date
-def test_error_change_due_date():
-    task_list = TaskList()
-    task_A = TaskUnit("task A")
-    task_list.add(task_A)
-    assert task_list.display(display_printable=True, display_due_date=True) == '''Task a
-- Due: None'''
-    task_list.change_due_date(task_A, 2024, 6, 27)
-    assert task_list.display(display_printable=True, display_due_date=True) == '''Task a
-- Due: 27/06/2024'''
-    task_list.reset_due_date(task_A)
-    assert task_list.display(display_printable=True, display_due_date=True) == '''Task a
-- Due: None'''
-
-
 # Reset All Due Dates
-
+def test_rest_all_due_dates():
+    task_list = TaskList()
+    task_A = TaskUnit("task A", 2024, 6, 27)
+    task_B = TaskUnit("task B", 2024, 1, 6)
+    task_C = TaskUnit("task C", 2025, 1, 1)
+    task_list.add(task_A)
+    task_list.add(task_B)
+    task_list.add(task_C)
+    assert task_A.due_date_display == "27/06/2024"
+    assert task_B.due_date_display == "06/01/2024"
+    assert task_C.due_date_display == "01/01/2025"
+    task_list.reset_all()
+    assert task_A.due_date_display == None
+    assert task_B.due_date_display == None
+    assert task_C.due_date_display == None
 
 # Displaying Tasks in Terminal - list of TaskUnit.task
 def test_display_tasks_as_list_object_of_task_names():
