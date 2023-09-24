@@ -216,3 +216,27 @@ def test_error_read_partial_no_current_read():
     with pytest.raises(Exception) as e:
         diary.read_partial(wpm=23, min=1)
     assert str(e.value) == "No entry currently being read. Please choose an entry."
+
+
+def test_extract_phone_numbers():
+    diary = Diary()
+    entry_1 = DiaryEntry("Title 1", "blah blah blah 07771123456")
+    entry_2 = DiaryEntry("Title 2", (lorem_ipsum_100_words + " 07771104177"))
+    entry_3 = DiaryEntry("Title 3", lorem_ipsum_1000_words + " 07999856778 07000123456")
+    diary.add(entry_1)
+    diary.add(entry_2)
+    diary.add(entry_3)
+    assert diary.extract_phone_numbers() == ["07771123456", "07771104177", "07999856778", "07000123456"]
+
+def test_display_all_phone_numbers():
+    diary = Diary()
+    entry_1 = DiaryEntry("Title 1", "blah blah blah 07771123456")
+    entry_2 = DiaryEntry("Title 2", (lorem_ipsum_100_words + " 07771104177"))
+    entry_3 = DiaryEntry("Title 3", lorem_ipsum_1000_words + " 07999856778 07000123456")
+    diary.add(entry_1)
+    diary.add(entry_2)
+    diary.add(entry_3)
+    assert diary.display_all_phone_numbers() == '''07771123456
+07771104177
+07999856778
+07000123456'''

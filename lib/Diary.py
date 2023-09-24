@@ -153,9 +153,25 @@ class Diary():
 
 
 
+    #EXTRACTING PHONE NUMBERS:
     def extract_phone_numbers(self) -> list:
-
-        pass
+        '''
+        Params: None
+        Returns: a list of all phone numbers in all diary contents
+        Side effects: none
+        '''
+        result = []
+        for entry in self.all_diary_entries:
+            for string in entry.word_list():
+                if string.isnumeric() and len(string) == 11 and string not in result:
+                    result.append(string)
+        return result
 
     def display_all_phone_numbers(self) -> str:
-        pass
+        '''
+        Params: None
+        Returns: a formatted string to print out all phone numbers
+        Side effects: none
+        '''
+        return "\n".join(self.extract_phone_numbers())
+    
