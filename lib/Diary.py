@@ -1,36 +1,3 @@
-'''```
-As a user
-So that I can record my experiences
-I want to keep a regular diary
-
-```
-As a user
-So that I can reflect on my experiences
-I want to read my past diary entries
-```
-
-* DiaryEntry --> attributes: .date, .title, .contents, .display_format
-* DiaryEntry --> add() --> Diary
-* Diary --> display_all() --> [DiaryEntrie(s).title]]
-* Diary --> read() --> DiaryEntry.contents
-
-```
-As a user
-So that I can reflect on my experiences in my busy day
-I want to select diary entries to read based on how much time I have and my reading speed
-```
-
-```
-As a user
-So that I can keep track of my contacts
-I want to see a list of all of the mobile phone numbers in all my diary entries
-```
-
-* Reading chunk - entire entries of Diary & portions of DiaryEntry based on time * reading_speed
-
-* DiaryEntry --> method: word_count(), chunk(), read_portion(), read_all()
-* Diary --> method: add(), word_counts(), reading_chunk_whole_entry(), reading_chunk_partial_entry(), all_contents()
-'''
 from lib.DiaryEntry import DiaryEntry
 
 class Diary():
@@ -78,13 +45,16 @@ class Diary():
         Returns: A formatted string to display all entries by title, date and word count in the terminal
         Effects:
         '''
+        # if by_word_count is true, sort by highest to lowest word_count
         if by_word_count == True:
             lst = sorted(self.all_diary_entries, key = lambda x: x.word_count(), reverse=True)
         
-        else:
+        else: # else, default is sorted by added
             lst = self.all_diary_entries
         
         formatted_strings_list = [entry.format_for_diary() for entry in lst]
+        
+        # join with two spaces added in between for readablility
         return '\n\n'.join(formatted_strings_list)
 
 
@@ -141,7 +111,7 @@ class Diary():
             for obj in self.all_diary_entries: #reset all other entries to be read from the beginning.
                 if obj != entry:
                     obj.start_over_reading()
-        return entry.reading_chunk(wpm, min)
+        return entry.reading_chunk(wpm, min) #can repeatedly call this method to get the next reading chunk of currently_reading
         
 
     def start_over_reading_current(self):
@@ -169,10 +139,13 @@ class Diary():
         words_readable = wpm * min
         longest_entry_length = 0
         longest_entry = None
+
+        #loop through all_diary_entries to find the longest entry that is not over the words_readable
         for entry in self.all_diary_entries:
             if words_readable >= entry.word_count() > longest_entry_length:
                 longest_entry = entry
 
+        #if longest_entry is still None, no entry was short enough to be read in the timeframe
         if longest_entry == None:
             raise Exception("Reading time too short to read any entry entirely.")
 
